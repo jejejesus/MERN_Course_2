@@ -4,7 +4,11 @@ export default {
   theme: {
     extend: {},
     container: {
-      padding: '10rem',
+      padding: {
+        DEFAULT: '2rem',
+        md: '10rem',
+      },
+
     },
     colors: {
       'pink': '#f7cac9',
@@ -13,6 +17,8 @@ export default {
       'dark-blue': '#034f84',
       'white': '#FFFFFF',
       'black': '#000000',
+      'gray': '#808080',
+      'dark-gray': '#404040',
     }
   },
   plugins: [],
