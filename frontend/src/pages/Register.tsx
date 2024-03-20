@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from "../api-client";
+import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
-export type RegisterForm = {
-    fistName: string;
+export type RegisterFormData = {
+    firstName: string;
     lastName: string;
     email: string;
     password: string;
@@ -11,20 +13,22 @@ export type RegisterForm = {
 }
 
 const Register = () => {
-
+    const navigate = useNavigate();
+    const { showToast } = useAppContext();
     const {
-        register,
-        watch,
-        handleSubmit,
-        formState: { errors }
-    } = useForm<RegisterForm>();
+      register,
+      watch,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<RegisterFormData>();
 
     const mutation = useMutation(apiClient.register, {
         onSuccess: () => {
-            console.log("Account created successfully!");
+            showToast({ message: "Account created successfully", type: "SUCCESS" });
+            navigate("/");
         },
         onError: (error: Error) => {
-            console.log(error.message);
+            showToast({ message: error.message, type: "ERROR" });
         }
     });
 
@@ -39,14 +43,14 @@ const Register = () => {
                 <label className="text-dark-gray text-sm font-bold flex-1">
                     First Name
                     <input className="border rounded w-full py-1 px-2 font-normal"
-                    {...register("fistName", { required: "This field is required" })}></input>
-                    { errors.fistName && <span className="text-gray"><strong>!</strong> {errors.fistName.message}</span> }
+                    {...register("firstName", { required: "This field is required" })}></input>
+                    { errors.firstName && <span className="text-gray font-semibold"><strong>!</strong> {errors.firstName.message}</span> }
                 </label>
                 <label className="text-dark-gray text-sm font-bold flex-1">
                     Last Name
                     <input className="border rounded w-full py-1 px-2 font-normal"
                     {...register("lastName", { required: "This field is required" })}></input>
-                    { errors.lastName && <span className="text-gray"><strong>!</strong> {errors.lastName.message}</span> }
+                    { errors.lastName && <span className="text-gray font-semibold"><strong>!</strong> {errors.lastName.message}</span> }
                 </label>
             </div>
             <label className="text-dark-gray text-sm font-bold flex-1">
@@ -54,7 +58,7 @@ const Register = () => {
                 <input type="email"
                 className="border rounded w-full py-1 px-2 font-normal"
                 {...register("email", { required: "This field is required" })}></input>
-                { errors.email && <span className="text-gray"><strong>!</strong> {errors.email.message}</span> }
+                { errors.email && <span className="text-gray font-semibold"><strong>!</strong> {errors.email.message}</span> }
             </label>
             <label className="text-dark-gray text-sm font-bold flex-1">
                 Password
@@ -66,7 +70,7 @@ const Register = () => {
                             value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
                             message: "Password must contain at least:\none lowercase letter,\none uppercase letter,\none digit,\none special character,\nand be at least 6 characters long"
                     },})}></input>
-                    { errors.password && <span className="text-gray"><strong>!</strong> {errors.password.message}</span> }
+                    { errors.password && <span className="text-gray font-semibold"><strong>!</strong> {errors.password.message}</span> }
             </label>
             <label className="text-dark-gray text-sm font-bold flex-1">
                 Confirm password
@@ -78,7 +82,7 @@ const Register = () => {
                         else if (val !== watch("password")) return "Passwords must match"
                     }
                 })}></input>
-                { errors.confirmPassword && <span className="text-gray"><strong>!</strong> {errors.confirmPassword.message}</span> }
+                { errors.confirmPassword && <span className="text-gray font-semibold"><strong>!</strong> {errors.confirmPassword.message}</span> }
             </label>
             <span>
                 <button type="submit"

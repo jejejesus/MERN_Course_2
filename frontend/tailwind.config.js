@@ -2,7 +2,9 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      textDecoration: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+  },
     container: {
       padding: {
         DEFAULT: '2rem',
@@ -11,16 +13,28 @@ export default {
 
     },
     colors: {
-      'pink': '#f7cac9',
-      'dark-pink': '#f7786b',
-      'blue': '#92a8d1',
-      'dark-blue': '#034f84',
+      'pink': '#F7CAC9',
+      'dark-pink': '#F7786B',
+      'blue': '#92A8D1',
+      'dark-blue': '#034F84',
       'white': '#FFFFFF',
       'black': '#000000',
       'gray': '#808080',
       'dark-gray': '#404040',
+      'green': '#57C785',
+      'red': '#C70039',
     }
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.underline-dotted': {
+          'text-decoration': 'underline',
+          'text-decoration-style': 'dotted',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 }
 
