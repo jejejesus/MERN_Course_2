@@ -24,7 +24,7 @@ router.post("/login",[
         if (!isMatch) return res.status(400).json({ message: "Incorrect password" });
         else {
             const token = jwt.sign(
-                { _id: user._id },
+                { userId: user._id },
                 process.env.JWT_SECRET as string,
                 { expiresIn: "7d" }
             );
@@ -43,6 +43,13 @@ router.post("/login",[
 
 router.get("/validate-token", verifyToken, async (req: Request, res: Response) => {
     res.status(200).send({ userId: req.userId });
+});
+
+router.post("/logout", (req: Request, res: Response) => {
+    res.cookie("auth_token", "", {
+        expires: new Date(0)
+    });
+    res.status(200).send({ message: "Sesión cerrada" });
 });
 
 export default router;
