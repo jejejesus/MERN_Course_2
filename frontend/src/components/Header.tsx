@@ -17,7 +17,7 @@ const Header = () => {
                         <LogoutButton />
                     </> : <>
                         <Link to="/register" className="text-white font-bold tracking-tight hover:text-dark-pink hover:underline-dotted">Register</Link>
-                        <Link to="/sign-in" className="flex items-center text-white bg-dark-pink px-3 py-1 rounded-md font-bold tracking-tight hover:text-dark-pink hover:bg-white">Sign in</Link>
+                        <Link to="/sign-in" className="flex items-center text-white bg-dark-pink px-3 py-2 rounded-md font-bold tracking-tight hover:text-dark-pink hover:bg-pink">Sign in</Link>
                     </>
                     }
                 </span>
