@@ -37,7 +37,7 @@ router.post("/login",[
         }
     } catch (err) {
         console.log(err);
-        res.status(500).send({ message: "Something went wrong" });
+        res.status(500).send({ message: "Failed to login" });
     }
 });
 
@@ -49,7 +49,7 @@ router.post("/logout", (req: Request, res: Response) => {
     res.cookie("auth_token", "", {
         expires: new Date(0)
     });
-    res.status(200).send({ message: "Sesión cerrada" });
+    res.status(200).send({ message: "Logged out" });
 });
 
 export default router;

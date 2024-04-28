@@ -48,8 +48,16 @@ router.post("/", verifyToken, [
 
         res.status(201).send(hotel);
     } catch (err) {
-        console.log("Error creating hotel: ", err);
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: "Error posting hotel" });
+    }
+});
+
+router.get("/", verifyToken, async (req: Request, res: Response) => {
+    try {
+        const hotels = await Hotel.find({ userId: req.userId });
+        res.send(hotels);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching hotels" });
     }
 });
 
