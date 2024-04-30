@@ -4,6 +4,8 @@ import TypeSection from "./TypeSections";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import { useEffect } from "react";
+import { HotelType } from "../../../../backend/src/shared/types";
 
 export type HotelFormData = {
   name: string;
@@ -15,21 +17,28 @@ export type HotelFormData = {
   starRating: number;
   facilities: string[];
   imageFiles: FileList;
+  imageUrls: string[];
   adultCount: number;
   childCount: number;
 };
 
 type Props = {
+  hotel?: HotelType;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
 
-const ManageHotelForm = ({onSave, isLoading}: Props) => {
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
+
+  useEffect(() => {
+    reset(hotel);
+  }, [hotel, reset]);
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
+    if (hotel) formData.append("hotelId", hotel._id);
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -42,6 +51,11 @@ const ManageHotelForm = ({onSave, isLoading}: Props) => {
     formDataJson.facilities.forEach((facility, index) => {
       formData.append(`facilities[${index}]`, facility);
     });
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((imageUrl, index) => {
+        formData.append(`imageUrls[${index}]`, imageUrl);
+      });
+    }
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append("imageFiles", imageFile);
     });
@@ -63,7 +77,7 @@ const ManageHotelForm = ({onSave, isLoading}: Props) => {
             type="submit"
             className="text-white bg-dark-pink px-3 py-2 rounded-md font-bold hover:text-dark-pink hover:bg-pink disabled:bg-light-gray disabled:text-gray disabled:cursor-not-allowed"
           >
-            {isLoading? "Saving..." : "Save"}
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </span>
       </form>
