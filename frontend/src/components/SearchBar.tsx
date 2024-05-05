@@ -102,7 +102,7 @@ const SearchBar = () => {
       </div>
 
       <div className="flex gap-1">
-        <button className="w-1/3 bg-dark-pink text-white h-full p-2 font-bold text-xl hover:bg-pink rounded">
+        <button className="w-1/3 bg-dark-pink text-white h-full p-2 font-semibold text-xl hover:bg-pink rounded">
           Clear
         </button>
         <button className="w-2/3 bg-dark-blue text-white h-full p-2 font-bold text-xl hover:bg-blue rounded">
