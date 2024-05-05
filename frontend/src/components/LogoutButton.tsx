@@ -1,16 +1,17 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../api-client";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { showToast } = useAppContext();
 
   const mutation = useMutation(apiClient.logout, {
-    onSuccess: () => {
-      //window.location.reload();
+    onSuccess: async () => {
       showToast({ message: "Sesión cerrada", type: "SUCCESS" });
+      await queryClient.invalidateQueries("validateToken");
       navigate("/");
     },
     onError: (error: Error) => {
