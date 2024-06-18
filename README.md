@@ -2,7 +2,7 @@
 
 From Youtube: https://youtu.be/YdBy9-0pER4?si=p_oECkQHqO-KpMIF
 
-## Required .env file variables:
+## Required Backend .env file variables:
 
 - PORT
 - MONGO_URL
@@ -18,3 +18,11 @@ From Youtube: https://youtu.be/YdBy9-0pER4?si=p_oECkQHqO-KpMIF
 **Stripe**
 
 - STRIPE_API_KEY
+
+## Required Frontend .env file variables:
+
+- VITE_API_BASE_URL
+
+**Stripe**
+
+- VITE_STRIPE_PUBLIC_KEY
